@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Navbar with Submenu</title>
+<style>
+    .navbar-container {
+  display: flex;
+  align-items: center;
+}
+
+.navbar {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 300px; /* Adjust as needed */
+}
+
+.navbar li {
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid #ccc;
+  position: relative;
+}
+
+.prev-btn,
+.next-btn {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 20px;
+  padding: 5px 10px;
+  margin: 0 10px;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.navbar li:hover .submenu {
+  display: block;
+}
+</style>
+</head>
+<body>
+    <div class="navbar-container">
+        <button class="prev-btn">&lt;</button>
+        <ul class="navbar">
+          <li>Item 1</li>
+          <li id="item2">Item 2 jhhjh
+            <ul class="submenu">
+              <li>Subitem 1</li>
+              <li>Subitem 2</li>
+              <li>Subitem 3</li>
+            </ul>
+          </li>
+          <li>Item 3</li>
+          <li>Item 4</li>
+          <li>Item 5 hjjhjhjhjhjh</li>
+          <li>Item 6</li>
+          <li>Item 7
+            <ul class="submenu">
+                <li>Subitem 1</li>
+                <li>Subitem 2</li>
+                <li>Subitem 3</li>
+              </ul>
+          </li>
+          <li>Item 8 jh</li>
+          <li>Item 9</li>
+          <li>Item 10</li>
+        </ul>
+        <button class="next-btn">&gt;</button>
+      </div>
+      
+      
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const prevBtn = document.querySelector('.prev-btn');
+  const nextBtn = document.querySelector('.next-btn');
+  const navbar = document.querySelector('.navbar');
+  const items = navbar.querySelectorAll('li');
+
+  let currentIndex = 0;
+
+  function move(direction) {
+    const containerWidth = navbar.offsetWidth;
+    const lastItem = items[items.length - 1];
+    const maxScroll = lastItem.offsetLeft + lastItem.offsetWidth - containerWidth;
+
+    if (direction === 'prev' && currentIndex > 0) {
+      currentIndex--;
+    } else if (direction === 'next' && currentIndex < items.length - 1) {
+      currentIndex++;
+    }
+
+    const scrollOffset = items[currentIndex].offsetLeft - navbar.offsetLeft;
+    navbar.scrollTo({
+      left: Math.min(scrollOffset, maxScroll),
+      behavior: 'smooth'
+    });
+  }
+  
+  prevBtn.addEventListener('click', function() {
+    move('prev');
+  });
+  
+  nextBtn.addEventListener('click', function() {
+    move('next');
+  });
+
+  // Show submenu on hover
+  navbar.addEventListener('mouseover', function(event) {
+    const target = event.target;
+    const submenu = target.querySelector('.submenu');
+    if (submenu) {
+      submenu.style.display = 'block';
+    }
+  });
+
+  // Hide submenu when mouse leaves
+  navbar.addEventListener('mouseout', function(event) {
+    const target = event.target;
+    const submenu = target.querySelector('.submenu');
+    if (submenu) {
+      submenu.style.display = 'none';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
